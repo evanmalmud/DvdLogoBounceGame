@@ -26,6 +26,8 @@ public class LogoMover : MonoBehaviour
 
     public GameObject easyModeObj;
 
+    public AudioSource missSFX, cornerSFX;
+
     private void Start()
     {
         dvdLogoCollider = GetComponent<BoxCollider2D>();
@@ -120,6 +122,16 @@ public class LogoMover : MonoBehaviour
         }
         if(corenerHit) {
             Debug.Log("We hit a corner!");
+            if (!cornerSFX.isPlaying) {
+                cornerSFX.Play();
+            }
+        } else if (numberSidesHitThisFrame.x > 0 || numberSidesHitThisFrame.y > 0 || numberSidesHitThisFrame.z > 0 || numberSidesHitThisFrame.w > 0) {
+            if (!missSFX.isPlaying) {
+                missSFX.Play();
+            } else {
+                missSFX.Stop();
+                missSFX.Play();
+            }
         }
     }
 
